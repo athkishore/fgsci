@@ -59,6 +59,7 @@ db.sqlite3
 # Flask stuff:
 instance/
 .webassets-cache
+*.db
 
 # Scrapy stuff:
 .scrapy
@@ -97,3 +98,6 @@ venv.bak/
 
 # Joe backup files
 *~
+
+# Flask config file
+config.py
