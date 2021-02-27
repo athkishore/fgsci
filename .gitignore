@@ -89,7 +89,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.flaskenv
 
 # Spyder project settings
 .spyderproject
 .spyproject
+
+# Joe backup files
+*~
