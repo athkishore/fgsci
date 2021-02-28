@@ -10,7 +10,9 @@
     <div>
       Forgotten Science: 
       <a href="{{ url_for('index') }}">Home</a>
-      {% if current_user.is_authenticated %}
+      {% if current_user.is_authenticated and current_user.username ==
+      'admin'%}
+      <a href="{{ url_for('create_post') }}">New post</a>
       <a href="{{ url_for('logout') }}">Logout</a>
       {% endif %}
     </div>

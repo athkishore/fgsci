@@ -7,7 +7,11 @@
     <h1>Hello, welcome to Forgotten Science!</h1>
     {% endif %}
     {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body
-    }}</b></p></div>
+    <div><p>{{ post.author.username }} says: </p></div>
+    {{ post.body }}<br>
+    {% if current_user.is_authenticated and current_user.username == 'admin' %}
+    <a href="{{ url_for('edit_post',post_id=post.id) }}">Edit</a>
+    {% endif %} 
+    <hr>
     {% endfor %}
 {% endblock %}
