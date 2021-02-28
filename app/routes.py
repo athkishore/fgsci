@@ -41,11 +41,13 @@ def edit_post(post_id):
   post = Post.query.filter_by(id=int(post_id)).first_or_404()
   form = PostForm()
   if form.validate_on_submit():
+    post.title = form.title.data
     post.body = form.post.data
     db.session.commit()
     flash('Your changes have been saved.')
     return redirect(url_for('index'))    
   elif request.method == 'GET':
+    form.title.data = post.title
     form.post.data = post.body
   return render_template("edit_post.html", title="Edit Post", form=form,
     post = post)
@@ -55,9 +57,14 @@ def edit_post(post_id):
 def create_post():
   form = PostForm()
   if form.validate_on_submit():
-    post = Post(body=form.post.data, author=current_user)
+    post = Post(title=form.title.data, body=form.post.data, author=current_user)
     db.session.add(post)
     db.session.commit()
     flash('Your post is now live!')
     return redirect(url_for('index'))
-  return render_template("create_post.html", title="Create Post", form=form)         
+  return render_template("create_post.html", title="Create Post", form=form)   
+  
+@app.route('/view-post/<post_id>')
+def view_post(post_id):
+  post = Post.query.filter_by(id=int(post_id)).first_or_404()
+  return render_template("view_post.html", title=post.title, post=post)     

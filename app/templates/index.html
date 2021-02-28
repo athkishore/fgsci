@@ -7,6 +7,9 @@
     <h1>Hello, welcome to Forgotten Science!</h1>
     {% endif %}
     {% for post in posts %}
+    {% if post.title %}
+    <h2><a href="{{ url_for('view_post',post_id=post.id) }}">{{ post.title }}</a></h2>
+    {% endif %}
     <div><p>{{ post.author.username }} says: </p></div>
     {% autoescape off %}
     {{ post.body }}<br>

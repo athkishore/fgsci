@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if post.title %}
+  <h1>{{ post.title }}</h1>
+  {% endif %}
+  {% autoescape off %}
+  {{ post.body }}
+  {% endautoescape %}
+
+  {% if current_user.is_authenticated and current_user.username == 'admin'
+  %}
+  <p><a href="{{ url_for('edit_post', post_id=post.id) }}">Edit post</a></p>
+  {% endif %}
+{% endblock %}

@@ -9,6 +9,7 @@ class LoginForm(FlaskForm):
   submit = SubmitField('Sign In')
 
 class PostForm(FlaskForm):
+  title = StringField('Title', validators=[DataRequired()])
   post = TextAreaField('Write your post', validators=[DataRequired()])
   submit = SubmitField('Submit')
     
