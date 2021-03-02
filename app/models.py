@@ -4,6 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
 
+post_rel = db.Table('post_rel', 
+  db.Column('parent_id', db.Integer, db.ForeignKey('post.id')),
+  db.Column('child_id', db.Integer, db.ForeignKey('post.id'))
+)
+
 class User(UserMixin, db.Model):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(64), index=True, unique=True)
@@ -27,9 +32,31 @@ class Post(db.Model):
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   category = db.Column(db.String(64), db.ForeignKey('category.id'))
+  child_posts = db.relationship(
+    'Post', secondary=post_rel,
+    primaryjoin=(post_rel.c.parent_id == id),
+    secondaryjoin=(post_rel.c.child_id == id),
+    backref=db.backref('parent_posts', lazy='dynamic'), lazy='dynamic')
   
   def __repr__(self):
     return '<Post {}>'.format(self.body)
+
+  def make_child_of(self, post):
+    if not self.is_child_of(post):
+      self.parent_posts.append(post)
+      
+  def remove_parent(self, post):
+    if self.is_child_of(post):
+      self.parent_posts.remove(post)
+      
+  def is_child_of(self, post):
+    return self.parent_posts.filter(
+      post_rel.c.parent_id == post.id).count() > 0
+
+#  def child_posts(self):
+#    return Post.query.join(
+#      post_rel, (post_rel.c.parent_id == Post.id)).filter(
+#        post_rel.c.parent_id == self.id)
 
 class Category(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -42,4 +69,7 @@ class Category(db.Model):
 @login.user_loader
 def load_user(id):
   return User.query.get(int(id))
-      
+
+
+
+        
