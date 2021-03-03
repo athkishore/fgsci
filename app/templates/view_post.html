@@ -8,6 +8,15 @@
   {{ post.body }}
   {% endautoescape %}
 
+  {% if post.child_posts.all() %}
+  <h3>Read more</h3>
+  {% for child_post in post.child_posts.all() %}
+  <p><a href="{{ url_for('view_post', post_id=child_post.id) }}">
+    {{ child_post.title }}
+  </a></p>
+  {% endfor %}
+  {% endif %}
+
   {% if current_user.is_authenticated and current_user.username == 'admin'
   %}
   <p><a href="{{ url_for('edit_post', post_id=post.id) }}">Edit post</a></p>
