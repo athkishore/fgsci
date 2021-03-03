@@ -43,6 +43,8 @@ def edit_post(post_id):
   if form.validate_on_submit():
     post.title = form.title.data
     post.body = form.post.data
+    add_parent = Post.query.filter_by(id=form.make_child_of.data).first_or_404()
+    post.make_child_of(add_parent)
     db.session.commit()
     flash('Your changes have been saved.')
     return redirect(url_for('index'))    
