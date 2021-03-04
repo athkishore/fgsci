@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
+from wtforms.validators import DataRequired, Optional
 
 class LoginForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
@@ -12,7 +12,6 @@ class PostForm(FlaskForm):
   title = StringField('Title', validators=[DataRequired()])
   post = TextAreaField('Write your post', validators=[DataRequired()])
   submit = SubmitField('Submit')
-  make_child_of = IntegerField('Enter id of parent post')
-  remove_parent = IntegerField('Enter id of parent post')
-  
+  add_remove_parent = SelectField('Add/Remove Parent', choices=[(0,'None'),(1,'Add'),(2,'Remove')], default=0)
+  parent_id = IntegerField('Enter id of parent post',validators=[Optional()])  
     

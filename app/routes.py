@@ -43,8 +43,14 @@ def edit_post(post_id):
   if form.validate_on_submit():
     post.title = form.title.data
     post.body = form.post.data
-    add_parent = Post.query.filter_by(id=form.make_child_of.data).first_or_404()
-    post.make_child_of(add_parent)
+    if form.parent_id.data:
+      parent = Post.query.filter_by(id=form.parent_id.data).first_or_404()
+      if int(form.add_remove_parent.data) == 1 and not post.is_child_of(parent):
+        post.make_child_of(parent)
+        flash('Added parent {}'.format(parent))
+      elif int(form.add_remove_parent.data) == 2 and post.is_child_of(parent):
+        post.remove_parent(parent)
+        flash('Removed parent {}'.format(parent))
     db.session.commit()
     flash('Your changes have been saved.')
     return redirect(url_for('index'))    

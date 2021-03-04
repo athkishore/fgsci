@@ -19,9 +19,16 @@
       {% endfor %}
      </p>
      <p>
-       {{ form.make_child_of.label }}<br>
-       {{ form.make_child_of() }}<br>
-       {% for error in form.make_child_of.errors %}
+       {{ form.add_remove_parent.label }}<br>
+       {{ form.add_remove_parent() }}<br>
+       {% for error in form.add_remove_parent.errors %}
+       <span style="color: red;">[{{ error }}]</span>
+       {% endfor %}
+     </p>
+     <p>
+       {{ form.parent_id.label }}<br>
+       {{ form.parent_id() }}<br>
+       {% for error in form.parent_id.errors %}
        <span style="color: red;">[{{ error }}]</span>
        {% endfor %}
      </p>
