@@ -39,7 +39,7 @@ def logout():
 @login_required
 def edit_post(post_id):
   post = Post.query.filter_by(id=int(post_id)).first_or_404()
-  form = PostForm()
+  form = PostForm(post.title)
   if form.validate_on_submit():
     post.title = form.title.data
     post.body = form.post.data
@@ -63,7 +63,7 @@ def edit_post(post_id):
 @app.route('/create-post', methods=['GET', 'POST'])
 @login_required
 def create_post():
-  form = PostForm()
+  form = PostForm('')
   if form.validate_on_submit():
     post = Post(title=form.title.data, body=form.post.data, author=current_user)
     db.session.add(post)
