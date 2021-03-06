@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('body', sa.Text(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('category', sa.String(length=64), nullable=True),
+    sa.Column('category', sa.Integer, nullable=True),
     sa.ForeignKeyConstraint(['category'], ['category.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
