@@ -100,7 +100,7 @@ venv.bak/
 *~
 
 # Flask config file
-# config.py
+config.py
 
 # Flask log
 logs/
