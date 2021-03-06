@@ -31,7 +31,7 @@ class Post(db.Model):
   body = db.Column(db.Text)
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-  category = db.Column(db.String(64), db.ForeignKey('category.id'))
+  category = db.Column(db.Integer, db.ForeignKey('category.id'))
   child_posts = db.relationship(
     'Post', secondary=post_rel,
     primaryjoin=(post_rel.c.parent_id == id),
