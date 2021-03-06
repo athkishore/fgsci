@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, PostForm
+from app.forms import LoginForm, PostForm, EmptyForm
 from app.models import User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -75,11 +75,20 @@ def create_post():
 @app.route('/view-post/<post_id>')
 def view_post(post_id):
   post = Post.query.filter_by(id=int(post_id)).first_or_404()
-  return render_template("view_post.html", title=post.title, post=post)     
+  form = EmptyForm()
+  return render_template("view_post.html", title=post.title, post=post, form=form)     
   
-@app.route('/delete-post/<post_id>')
+@app.route('/delete-post/<post_id>', methods=['GET', 'POST'])
+@login_required
 def delete_post(post_id):
   post = Post.query.filter_by(id=int(post_id)).first_or_404()
+  posts = Post.query.all()
+  for child_post in posts:
+    if child_post.is_child_of(post):
+      child_post.remove_parent(post)
+  for parent_post in posts:
+    if post.is_child_of(parent_post):
+      post.remove_parent(parent_post)
   db.session.delete(post)
   db.session.commit()
   return redirect(url_for('index'))

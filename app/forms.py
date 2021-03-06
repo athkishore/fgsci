@@ -26,4 +26,7 @@ class PostForm(FlaskForm):
       post = Post.query.filter_by(title=self.title.data).first()
       if post is not None:
         raise ValidationError('Please use a different title.')
-              
+
+class EmptyForm(FlaskForm):
+  submit = SubmitField('Delete')
+                
