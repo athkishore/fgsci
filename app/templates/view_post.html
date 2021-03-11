@@ -11,7 +11,7 @@
   {% if post.child_posts.all() %}
   <h3>Read more</h3>
   {% for child_post in post.child_posts.all() %}
-  <p><a href="{{ url_for('view_post', post_id=child_post.id) }}">
+  <p><a href="{{ url_for('view_post', post_slug=child_post.slug) }}">
     {{ child_post.title }}
   </a></p>
   {% endfor %}
@@ -19,9 +19,9 @@
 
   {% if current_user.is_authenticated and current_user.username == 'admin'
   %}
-  <p><a href="{{ url_for('edit_post', post_id=post.id) }}">Edit post</a></p>
+  <p><a href="{{ url_for('edit_post', post_slug=post.slug) }}">Edit post</a></p>
   <p>
-  <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post"
+  <form action="{{ url_for('delete_post', post_slug=post.slug) }}" method="post"
     onSubmit="return confirm('Are you sure you wish to delete?');"
   >
     {{ form.hidden_tag() }}

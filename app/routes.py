@@ -35,13 +35,14 @@ def logout():
   logout_user()
   return redirect(url_for('index'))
 
-@app.route('/edit-post/<post_id>', methods=['GET', 'POST'])
+@app.route('/edit-post/<post_slug>', methods=['GET', 'POST'])
 @login_required
-def edit_post(post_id):
-  post = Post.query.filter_by(id=int(post_id)).first_or_404()
+def edit_post(post_slug):
+  post = Post.query.filter_by(slug=post_slug).first_or_404()
   form = PostForm(post.title)
   if form.validate_on_submit():
     post.title = form.title.data
+    post.set_slug()
     post.body = form.post.data
     if form.parent_id.data:
       parent = Post.query.filter_by(id=form.parent_id.data).first_or_404()
@@ -66,22 +67,23 @@ def create_post():
   form = PostForm('')
   if form.validate_on_submit():
     post = Post(title=form.title.data, body=form.post.data, author=current_user)
+    post.set_slug()
     db.session.add(post)
     db.session.commit()
     flash('Your post is now live!')
     return redirect(url_for('index'))
   return render_template("create_post.html", title="Create Post", form=form)   
   
-@app.route('/view-post/<post_id>')
-def view_post(post_id):
-  post = Post.query.filter_by(id=int(post_id)).first_or_404()
+@app.route('/view-post/<post_slug>')
+def view_post(post_slug):
+  post = Post.query.filter_by(slug=post_slug).first_or_404()
   form = EmptyForm()
   return render_template("view_post.html", title=post.title, post=post, form=form)     
   
-@app.route('/delete-post/<post_id>', methods=['GET', 'POST'])
+@app.route('/delete-post/<post_slug>', methods=['GET', 'POST'])
 @login_required
-def delete_post(post_id):
-  post = Post.query.filter_by(id=int(post_id)).first_or_404()
+def delete_post(post_slug):
+  post = Post.query.filter_by(slug=post_slug).first_or_404()
   posts = Post.query.all()
   for child_post in posts:
     if child_post.is_child_of(post):
