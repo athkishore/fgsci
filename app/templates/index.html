@@ -2,10 +2,33 @@
 
 {% block app_content %}
     {% if current_user.is_authenticated %}
-    <h1>Hello, {{ current_user.username }}!</h1>
+    <h1 class="h1 text-center">Hello, {{ current_user.username }}!</h1>
     {% else %}
-    <h1>Hello, welcome to Forgotten Science!</h1>
+    <h1 class="h1 text-center">Hello, welcome to Forgotten Science!</h1>
     {% endif %}
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Learning science through history</h2>
+          <p>History of science helps us develop a fuller and richer
+    understanding of scientific knowledge. The stories of experiments,
+    controversies and discarded theories from the past make us examine the
+    knowledge that we take for granted today. This leads to a better
+    appreciation of the reasons for accepting the validity of the current
+    theories.</p>
+    
+          <p><strong>Forgotten science</strong> makes available material from the
+    history of science in an easily accessible form. Here you will read
+    about how scientists in the past tried to answer the questions you
+    have while learning science. You will find out how to repeat some of the
+    historical experiments with common materials and equipment lying around.
+    There are also excerpts from old books and papers, and summaries of
+    archaic scientific literature transcribed for a modern reader.</p>
+        </div>
+    
+        <div class="col-md-6">
+          <h3>Recent posts</h3>   
     {% for post in posts %}
     {% if post.title %}
     <h2><a href="{{ url_for('view_post',post_slug=post.slug) }}">{{ post.title }}</a></h2>
@@ -19,4 +42,7 @@
     {% endif %} 
     <hr>
     {% endfor %}
+        </div>
+      </div>
+    </div>
 {% endblock %}

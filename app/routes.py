@@ -10,8 +10,16 @@ from werkzeug.urls import url_parse
 #@login_required
 def index():
   #user = {'username':'admin'}
-  posts = Post.query.all()
-  return render_template('index.html', title='Home', posts=posts)
+  posts = Post.query.order_by(Post.timestamp.desc()).all()
+  return render_template('index.html', title='Home', posts=posts[0:1])
+
+@app.route('/all-posts')
+#@login_required
+def all_posts():
+  #user = {'username':'admin'}
+  posts = Post.query.order_by(Post.timestamp.desc()).all()
+  return render_template('all_posts.html', title='Home', posts=posts)
+
   
 @app.route('/login', methods=['GET', 'POST'])
 def login():
