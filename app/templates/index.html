@@ -1,16 +1,11 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    {% if current_user.is_authenticated %}
-    <h1 class="h1 text-center">Hello, {{ current_user.username }}!</h1>
-    {% else %}
-    <h1 class="h1 text-center">Hello, welcome to Forgotten Science!</h1>
-    {% endif %}
     
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <h2>Learning science through history</h2>
+          <h1>Learning science through history</h1>
           <p>History of science helps us develop a fuller and richer
     understanding of scientific knowledge. The stories of experiments,
     controversies and discarded theories from the past make us examine the
@@ -26,7 +21,6 @@
     There are also excerpts from old books and papers, and summaries of
     archaic scientific literature transcribed for a modern reader.</p>
         </div>
-    
         <div class="col-md-6">
           <h2>Recent posts</h2>   
     {% for post in posts %}
@@ -59,7 +53,7 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 bg-info" style="border: 3px; border-radius: 25px; height: 400px;">
     {% if story_post %}
     {% if story_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=story_post.slug) }}">{{
@@ -79,14 +73,15 @@
     {% endif %}
     <h3><a href="{{ url_for('view_post',post_slug='stories') }}">Explore more
     stories</a></h3>
-    
     {% else %}
 
         <h3><a href="{{ url_for('view_post',post_slug='stories')
         }}">Story</a></h3>
-    {% endif %}    
+    {% endif %}
+        </span>    
         </div>
-      <div class="col-md-3">
+      <div class="col-md-3 bg-warning" style="border: 3px;
+        border-radius: 25px; height: 400px;">
     {% if book_post %}
     {% if book_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=book_post.slug) }}">{{
@@ -112,7 +107,8 @@
         }}">Book</a></h3>
     {% endif %}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 bg-success" style="border: 1px; border-radius:
+      25px; height: 400px">
     {% if experiment_post %}
     {% if experiment_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=experiment_post.slug) }}">{{
@@ -139,7 +135,8 @@
         }}">Experiment</a></h3>
     {% endif %}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3" style="border: 3px; border-radius: 25px;
+      background-color: #cccccc; height: 400px">
     {% if question_post %}
     {% if question_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=question_post.slug) }}">{{
