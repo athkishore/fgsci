@@ -52,8 +52,8 @@ def edit_post(post_slug):
     post.title = form.title.data
     post.set_slug()
     post.body = form.post.data
-    if form.parent_id.data:
-      parent = Post.query.filter_by(id=form.parent_id.data).first_or_404()
+    if form.parent_slug.data:
+      parent = Post.query.filter_by(slug=form.parent_slug.data).first_or_404()
       if int(form.add_remove_parent.data) == 1 and not post.is_child_of(parent):
         post.make_child_of(parent)
         flash('Added parent {}'.format(parent))

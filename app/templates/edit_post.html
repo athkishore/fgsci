@@ -26,9 +26,9 @@
        {% endfor %}
      </p>
      <p>
-       {{ form.parent_id.label }}<br>
-       {{ form.parent_id() }}<br>
-       {% for error in form.parent_id.errors %}
+       {{ form.parent_slug.label }}<br>
+       {{ form.parent_slug() }}<br>
+       {% for error in form.parent_slug.errors %}
        <span style="color: red;">[{{ error }}]</span>
        {% endfor %}
      </p>
