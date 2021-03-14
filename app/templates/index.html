@@ -1,168 +1,91 @@
 {% extends "base.html" %}
 
-{% block app_content %}
-    
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6">
-          <h1>Learning science through history</h1>
-          <p>History of science helps us develop a fuller and richer
-    understanding of scientific knowledge. The stories of experiments,
-    controversies and discarded theories from the past make us examine the
-    knowledge that we take for granted today. This leads to a better
-    appreciation of the reasons for accepting the validity of the current
-    theories.</p>
-    
-          <p><strong>Forgotten science</strong> makes available material from the
-    history of science in an easily accessible form. Here you will read
-    about how scientists in the past tried to answer the questions you
-    have while learning science. You will find out how to repeat some of the
-    historical experiments with common materials and equipment lying around.
-    There are also excerpts from old books and papers, and summaries of
-    archaic scientific literature transcribed for a modern reader.</p>
-        </div>
-        <div class="col-md-6">
-          <h2>Recent posts</h2>   
-    {% for post in posts %}
-    {% if post.title %}
-    <h2><a href="{{ url_for('view_post',post_slug=post.slug) }}">{{ post.title }}</a></h2>
-    {% endif %}
-    <div><p>{{ post.author.username }} says: </p></div>
-    {% if post.body|length <200 %}
-    {% autoescape off %}
-    {{ post.body }}<br>
-    {% endautoescape %}
-    {% else %}
-    {% autoescape off %}
-    {{ post.body|truncate(200) }}
-    <a href="{{ url_for('view_post', post_slug=post.slug) }}">Read
-    more</a>
-    {% endautoescape %}
-    {% endif %}
-    {% if current_user.is_authenticated and current_user.username == 'admin' %}
-    <a href="{{ url_for('edit_post',post_slug=post.slug) }}">Edit</a>
-    {% endif %} 
+{% block app_content %} 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Learning science through history</h2>
+        <p>History of science helps us develop a fuller and richer understanding of scientific knowledge. The stories of experiments, controversies and discarded theories from the past make us examine the knowledge that we take for granted today. This leads to a better appreciation of the reasons for accepting the validity of the current theories.</p>
+        <p><strong>Forgotten science</strong> makes available material from the history of science in an easily accessible form. Here you will read about how scientists in the past tried to answer the questions you have while learning science. You will find out how to repeat some of the historical experiments with common materials and equipment lying around. There are also excerpts from old books and papers, and summaries of archaic scientific literature transcribed for a modern reader.</p>
+      </div>
+      <div class="col-md-6">
+        <h2>Recent posts</h2>   
+        {% for post in posts %}
+        <h2><a href="{{ url_for('view_post',post_slug=post.slug) }}">{{ post.title }}</a></h2>
+        {% autoescape off %}
+        <p>{{ post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=post.slug) }}">Read more</a></p>
+        {% endautoescape %}
+        {% if current_user.is_authenticated and current_user.username == 'admin' %}
+        <a href="{{ url_for('edit_post',post_slug=post.slug) }}">Edit</a>
+        {% endif %} 
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="h2 text-center">Featured articles</div>
+    </div>
     <hr>
-    {% endfor %}
+    <div class="card-deck">
+      <div class="card">
+        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        <div class="card-body">
+          {% if story_post %}
+          <h4 class="card-title">{{ story_post.title }}</a></h4>
+          {% autoescape off %}
+          <p class="card-text">{{ story_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=story_post.slug) }}">Read</a></p>
+          {% endautoescape %}
+          <a href="{{ url_for('view_post',post_slug='stories') }}" class="btn btn-primary">Explore more stories</a></h3>
+          {% else %}
+          <h3><a href="{{ url_for('view_post',post_slug='stories') }}">Stories</a></h3>
+          {% endif %}
         </div>
       </div>
-      <div class="row">
-        <div class="h2 text-center">
-          Featured articles
+      <div class="card">
+        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        <div class="card-body">
+          {% if book_post %}
+          <h4 class="card-title">{{ book_post.title }}</a></h4>
+          {% autoescape off %}
+          <p class="card-text">{{ book_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=book_post.slug) }}">Read</a></p>
+          {% endautoescape %}
+          <a href="{{ url_for('view_post',post_slug='books') }}" class="btn btn-primary">Explore more books</a>
+          {% else %}
+          <h3><a href="{{ url_for('view_post',post_slug='books') }}">Books</a></h3>
+          {% endif %}
         </div>
       </div>
-      <hr>
-      <div class="card-deck">
-        <div class="card">
-    {% if story_post %}
-    {% if story_post.title %}
-    <h3><a href="{{ url_for('view_post',post_slug=story_post.slug) }}">{{
-    story_post.title
-    }}</a></h3>
-    {% endif %}
-    {% if story_post.body|length <200 %}
-    {% autoescape off %}
-    {{ story_post.body }}<br>
-    {% endautoescape %}
-    {% else %}
-    {% autoescape off %}
-    {{ story_post.body|truncate(200) }}
-    <a href="{{ url_for('view_post', post_slug=story_post.slug) }}">Read
-    more</a>
-    {% endautoescape %}
-    {% endif %}
-    <h3><a href="{{ url_for('view_post',post_slug='stories') }}">Explore more
-    stories</a></h3>
-    {% else %}
-
-        <h3><a href="{{ url_for('view_post',post_slug='stories')
-        }}">Story</a></h3>
-    {% endif %}
-        </span>    
+      <div class="card">
+        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        <div class="card-body">
+          {% if experiment_post %}
+          <h4 class="card-title">{{ experiment_post.title }}</h4>
+          {% autoescape off %}
+          <p class="card-text">{{ experiment_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=experiment_post.slug) }}">Read</a></p>
+          {% endautoescape %}
+          <a href="{{ url_for('view_post',post_slug='experiments') }}" class="btn btn-primary">Explore more experiments</a>   
+          {% else %}
+          <h3><a href="{{ url_for('view_post',post_slug='experiments') }}">Experiment</a></h3>
+          {% endif %}
         </div>
-      <div class="card">
-    {% if book_post %}
-    {% if book_post.title %}
-    <h3><a href="{{ url_for('view_post',post_slug=book_post.slug) }}">{{
-    book_post.title
-    }}</a></h3>
-    {% endif %}
-    {% if book_post.body|length <200 %}
-    {% autoescape off %}
-    {{ book_post.body }}<br>
-    {% endautoescape %}
-    {% else %}
-    {% autoescape off %}
-    {{ book_post.body|truncate(200) }}
-    <a href="{{ url_for('view_post', post_slug=book_post.slug) }}">Read
-    more</a>
-    {% endautoescape %}
-    {% endif %}
-    <h3><a href="{{ url_for('view_post',post_slug='books') }}">Explore more
-    books</a></h3>
-    
-    {% else %}
-        <h3><a href="{{ url_for('view_post',post_slug='books')
-        }}">Book</a></h3>
-    {% endif %}
       </div>
       <div class="card">
-    {% if experiment_post %}
-    {% if experiment_post.title %}
-    <h3><a href="{{ url_for('view_post',post_slug=experiment_post.slug) }}">{{
-    experiment_post.title
-    }}</a></h3>
-    {% endif %}
-    {% if experiment_post.body|length <200 %}
-    {% autoescape off %}
-    {{ experiment_post.body }}<br>
-    {% endautoescape %}
-    {% else %}
-    {% autoescape off %}
-    {{ experiment_post.body|truncate(200) }}
-    <a href="{{ url_for('view_post', post_slug=experiment_post.slug) }}">Read
-    more</a>
-    {% endautoescape %}
-    {% endif %}
-    <h3><a href="{{ url_for('view_post',post_slug='experiments') }}">Explore more
-    experiments</a></h3>
-    
-    {% else %}
-
-        <h3><a href="{{ url_for('view_post',post_slug='experiments')
-        }}">Experiment</a></h3>
-    {% endif %}
-      </div>
-      <div class="card">
-    {% if question_post %}
-    {% if question_post.title %}
-    <h3><a href="{{ url_for('view_post',post_slug=question_post.slug) }}">{{
-    question_post.title
-    }}</a></h3>
-    {% endif %}
-    {% if question_post.body|length <200 %}
-    {% autoescape off %}
-    {{ question_post.body }}<br>
-    {% endautoescape %}
-    {% else %}
-    {% autoescape off %}
-    {{ question_post.body|truncate(200) }}
-    <a href="{{ url_for('view_post', post_slug=question_post.slug) }}">Read
-    more</a>
-    {% endautoescape %}
-    {% endif %}
-    <h3><a href="{{ url_for('view_post',post_slug='questions') }}">Explore more
-    questions</a></h3>
-    
-    {% else %}
-      
-        <h3><a href="{{ url_for('view_post',post_slug='questions')
-        }}">Question</a></h3>
-    {% endif %}
+        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        <div class="card-body">
+          {% if question_post %}
+          <h4 class="card-title">{{ question_post.title }}</h4>
+          {% autoescape off %}
+          <p class="card-text">{{ question_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=question_post.slug) }}">Read</a></p>
+          {% endautoescape %}
+          <a href="{{ url_for('view_post',post_slug='questions') }}" class="btn btn-primary">Explore more questions</a>
+          {% else %}
+          <h3><a href="{{ url_for('view_post',post_slug='questions') }}">Question</a></h3>
+          {% endif %}
+        </div>
       </div>      
     </div>
   </div>
-  <hr>
-  CC 4.0 BY-SA
+<hr>
+CC 4.0 BY-SA
   
-  {% endblock %}
+{% endblock %}

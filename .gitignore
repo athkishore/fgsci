@@ -104,3 +104,6 @@ config.py
 
 # Flask log
 logs/
+
+#Flask static files
+app/static/
