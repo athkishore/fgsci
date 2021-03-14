@@ -1,4 +1,6 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Optional, ValidationError
 import app
@@ -29,4 +31,8 @@ class PostForm(FlaskForm):
 
 class EmptyForm(FlaskForm):
   submit = SubmitField('Delete')
-                
+
+class UploadForm(FlaskForm):
+  file = FileField('File', validators=[FileRequired()])
+  submit = SubmitField('Upload')
+                  

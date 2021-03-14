@@ -1,9 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, PostForm, EmptyForm
+from app.forms import LoginForm, PostForm, EmptyForm, UploadForm
 from app.models import User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
+import os
 
 @app.route('/')
 @app.route('/index')
@@ -106,4 +108,19 @@ def delete_post(post_slug):
   db.session.delete(post)
   db.session.commit()
   return redirect(url_for('index'))
-  
+
+@app.route('/upload', methods=['GET', 'POST'])
+@login_required
+def upload():
+  form = UploadForm()
+  if form.validate_on_submit():
+    file = form.file.data
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(
+      app.root_path, 'static/', filename
+      )
+    )
+    flash('File successfully uploaded')
+    return redirect(url_for('index'))
+  return render_template('upload.html', form=form)
+    
