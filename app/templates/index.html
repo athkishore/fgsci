@@ -53,7 +53,8 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-3 bg-info" style="border: 3px; border-radius: 25px; height: 400px;">
+        <div class="col-md-3 bg-info" style="border: 3px; border-radius: 25px;
+        border-spacing: 10px;">
     {% if story_post %}
     {% if story_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=story_post.slug) }}">{{
@@ -81,7 +82,7 @@
         </span>    
         </div>
       <div class="col-md-3 bg-warning" style="border: 3px;
-        border-radius: 25px; height: 400px;">
+        border-radius: 25px; border-spacing: 10px;">
     {% if book_post %}
     {% if book_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=book_post.slug) }}">{{
@@ -108,7 +109,7 @@
     {% endif %}
       </div>
       <div class="col-md-3 bg-success" style="border: 1px; border-radius:
-      25px; height: 400px">
+      25px; border-spacing: 10px;">
     {% if experiment_post %}
     {% if experiment_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=experiment_post.slug) }}">{{
@@ -136,7 +137,7 @@
     {% endif %}
       </div>
       <div class="col-md-3" style="border: 3px; border-radius: 25px;
-      background-color: #cccccc; height: 400px">
+      background-color: #cccccc; border-spacing: 10px">
     {% if question_post %}
     {% if question_post.title %}
     <h3><a href="{{ url_for('view_post',post_slug=question_post.slug) }}">{{
