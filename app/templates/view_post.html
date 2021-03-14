@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+<div class+"container">
   {% if post.title %}
   <h1>{{ post.title }}</h1>
   {% endif %}
@@ -29,4 +30,5 @@
   </form>
   </p>
   {% endif %}
+</div>
 {% endblock %}
