@@ -10,12 +10,16 @@
   {% endautoescape %}
 
   {% if post.child_posts.all() %}
-  <h3>Read more</h3>
-  {% for child_post in post.child_posts.all() %}
-  <p><a href="{{ url_for('view_post', post_slug=child_post.slug) }}">
-    {{ child_post.title }}
-  </a></p>
-  {% endfor %}
+  <div class="card">
+    <div class="card-header">
+      Read more
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for child_post in post.child_posts.all() %}
+      <li class="list-group-item"><a href="{{ url_for('view_post', post_slug=child_post.slug) }}">{{ child_post.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
   {% endif %}
 
   {% if current_user.is_authenticated and current_user.username == 'admin'
