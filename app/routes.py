@@ -58,6 +58,7 @@ def edit_post(post_slug):
     post.title = form.title.data
     post.set_slug()
     post.body = form.post.data
+    post.featured_img = form.featured_img.data
     if form.parent_slug.data:
       parent = Post.query.filter_by(slug=form.parent_slug.data).first_or_404()
       if int(form.add_remove_parent.data) == 1 and not post.is_child_of(parent):
@@ -72,6 +73,7 @@ def edit_post(post_slug):
   elif request.method == 'GET':
     form.title.data = post.title
     form.post.data = post.body
+    form.featured_img.data = post.featured_img
   return render_template("edit_post.html", title="Edit Post", form=form,
     post = post)
 

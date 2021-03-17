@@ -28,7 +28,11 @@
     <hr>
     <div class="card-deck">
       <div class="card">
+        {% if story_post.featured_img %}
+        <img class="card-img-top" src="/static/{{ story_post.featured_img }}" style="height: 30vh; object-fit: cover;">
+        {% else %}
         <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        {% endif %}
         <div class="card-body">
           {% if story_post %}
           <h4 class="card-title">{{ story_post.title }}</a></h4>
@@ -42,7 +46,11 @@
         </div>
       </div>
       <div class="card">
+        {% if book_post.featured_img %}
+        <img class="card-img-top" src="/static/{{ book_post.featured_img }}" style="height: 30vh; object-fit: cover;">
+        {% else %}
         <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        {% endif %}
         <div class="card-body">
           {% if book_post %}
           <h4 class="card-title">{{ book_post.title }}</a></h4>
@@ -56,7 +64,11 @@
         </div>
       </div>
       <div class="card">
+        {% if experiment_post.featured_img %}
+        <img class="card-img-top" src="/static/{{ experiment_post.featured_img }}" style="height: 30vh; object-fit: cover;">
+        {% else %}
         <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        {% endif %}
         <div class="card-body">
           {% if experiment_post %}
           <h4 class="card-title">{{ experiment_post.title }}</h4>
@@ -70,7 +82,11 @@
         </div>
       </div>
       <div class="card">
+        {% if question_post.featured_img %}
+        <img class="card-img-top" src="/static/{{ question_post.featured_img }}" style="height: 30vh; object-fit: cover;">
+        {% else %}
         <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
+        {% endif %}
         <div class="card-body">
           {% if question_post %}
           <h4 class="card-title">{{ question_post.title }}</h4>

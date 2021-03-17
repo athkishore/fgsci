@@ -34,6 +34,7 @@ class Post(db.Model):
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   category = db.Column(db.Integer, db.ForeignKey('category.id'))
   slug = db.Column(db.String(128), index=True, unique=True)
+  featured_img = db.Column(db.String(128))
   child_posts = db.relationship(
     'Post', secondary=post_rel,
     primaryjoin=(post_rel.c.parent_id == id),
