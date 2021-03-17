@@ -12,7 +12,7 @@ import os
 #@login_required
 def index():
   #user = {'username':'admin'}
-  posts = Post.query.order_by(Post.timestamp.desc()).all()
+  posts = Post.query.filter_by(status=1).order_by(Post.timestamp.desc()).all()
   book_post = Post.query.filter_by(slug='harvard-case-histories-in-experimental-science').first_or_404()
   story_post = Post.query.filter_by(slug='when-young-faradays-first-discovery-led-to-charges-of-plagiarism').first_or_404()
   experiment_post = Post.query.filter_by(slug='making-a-leyden-jar').first_or_404()
@@ -25,6 +25,13 @@ def all_posts():
   #user = {'username':'admin'}
   posts = Post.query.order_by(Post.timestamp.desc()).all()
   return render_template('all_posts.html', title='Home', posts=posts)
+
+@app.route('/drafts')
+#@login_required
+def drafts():
+  #user = {'username':'admin'}
+  posts = Post.query.filter_by(status=0).order_by(Post.timestamp.desc()).all()
+  return render_template('drafts.html', title='Home', posts=posts)
 
   
 @app.route('/login', methods=['GET', 'POST'])
@@ -59,6 +66,7 @@ def edit_post(post_slug):
     post.set_slug()
     post.body = form.post.data
     post.featured_img = form.featured_img.data
+    post.status = int(form.status.data)
     if form.parent_slug.data:
       parent = Post.query.filter_by(slug=form.parent_slug.data).first_or_404()
       if int(form.add_remove_parent.data) == 1 and not post.is_child_of(parent):
@@ -74,6 +82,7 @@ def edit_post(post_slug):
     form.title.data = post.title
     form.post.data = post.body
     form.featured_img.data = post.featured_img
+    form.status.process_data(post.status)
   return render_template("edit_post.html", title="Edit Post", form=form,
     post = post)
 
@@ -82,11 +91,11 @@ def edit_post(post_slug):
 def create_post():
   form = PostForm('')
   if form.validate_on_submit():
-    post = Post(title=form.title.data, body=form.post.data, author=current_user)
+    post = Post(title=form.title.data, body=form.post.data, author=current_user, status=0)
     post.set_slug()
     db.session.add(post)
     db.session.commit()
-    flash('Your post is now live!')
+    flash('Your post is saved as draft.')
     return redirect(url_for('index'))
   return render_template("create_post.html", title="Create Post", form=form)   
   

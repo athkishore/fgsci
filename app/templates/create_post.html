@@ -18,6 +18,13 @@
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
+    <p>
+      {{ form.status.label }}<br>
+      {{ form.status() }}<br>
+      {% for error in form.status.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
     <p>{{ form.submit() }}</p>
   </form>
 {% endblock %}

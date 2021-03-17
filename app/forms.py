@@ -19,6 +19,7 @@ class PostForm(FlaskForm):
   add_remove_parent = SelectField('Add/Remove Parent', choices=[(0,'None'),(1,'Add'),(2,'Remove')], default=0)
   parent_slug = StringField('Enter slug of parent post',validators=[Optional()])
   featured_img = StringField('Enter featured image name', validators=[Optional()])
+  status = SelectField('Draft/Publish', choices=[(0,'draft'),(1,'publish')])
   
   def __init__(self, original_title, *args, **kwargs):
     super(PostForm, self).__init__(*args, **kwargs)
