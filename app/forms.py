@@ -37,4 +37,11 @@ class EmptyForm(FlaskForm):
 class UploadForm(FlaskForm):
   file = FileField('File', validators=[FileRequired()])
   submit = SubmitField('Upload')
-                  
+
+class SetFeaturedForm(FlaskForm):
+  type = SelectField('Select featured type', choices=[('stories', 'stories'), 
+    ('books', 'books'), ('experiments', 'experiments'), 
+    ('questions', 'questions')])
+  slug = StringField('Enter post slug', validators=[DataRequired()])
+  submit = SubmitField('Submit')
+                    

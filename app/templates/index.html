@@ -27,78 +27,26 @@
     </div>
     <hr>
     <div class="card-deck">
+      {% for featured_type, featured_post in featured_info %}
       <div class="card">
-        {% if story_post.featured_img %}
-        <img class="card-img-top" src="/static/{{ story_post.featured_img }}" style="height: 30vh; object-fit: cover;">
+        {% if featured_post.featured_img %}
+        <img class="card-img-top" src="/static/{{ featured_post.featured_img }}" style="height: 30vh; object-fit: cover;">
         {% else %}
         <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
         {% endif %}
         <div class="card-body">
-          {% if story_post %}
-          <h4 class="card-title">{{ story_post.title }}</a></h4>
+          {% if featured_post %}
+          <h4 class="card-title">{{ featured_post.title }}</a></h4>
           {% autoescape off %}
-          <p class="card-text">{{ story_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=story_post.slug) }}">Read</a></p>
+          <p class="card-text">{{ featured_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=featured_post.slug) }}">Read</a></p>
           {% endautoescape %}
-          <a href="{{ url_for('view_post',post_slug='stories') }}" class="btn btn-primary">Explore more stories</a></h3>
+          <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary">Explore more {{ featured_type.type }}</a></h3>
           {% else %}
-          <h3><a href="{{ url_for('view_post',post_slug='stories') }}">Stories</a></h3>
+          <h3><a href="{{ url_for('view_post', post_slug=featured_type.type) }}">{{ featured_type.type }}</a></h3>
           {% endif %}
         </div>
       </div>
-      <div class="card">
-        {% if book_post.featured_img %}
-        <img class="card-img-top" src="/static/{{ book_post.featured_img }}" style="height: 30vh; object-fit: cover;">
-        {% else %}
-        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
-        {% endif %}
-        <div class="card-body">
-          {% if book_post %}
-          <h4 class="card-title">{{ book_post.title }}</a></h4>
-          {% autoescape off %}
-          <p class="card-text">{{ book_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=book_post.slug) }}">Read</a></p>
-          {% endautoescape %}
-          <a href="{{ url_for('view_post',post_slug='books') }}" class="btn btn-primary">Explore more books</a>
-          {% else %}
-          <h3><a href="{{ url_for('view_post',post_slug='books') }}">Books</a></h3>
-          {% endif %}
-        </div>
-      </div>
-      <div class="card">
-        {% if experiment_post.featured_img %}
-        <img class="card-img-top" src="/static/{{ experiment_post.featured_img }}" style="height: 30vh; object-fit: cover;">
-        {% else %}
-        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
-        {% endif %}
-        <div class="card-body">
-          {% if experiment_post %}
-          <h4 class="card-title">{{ experiment_post.title }}</h4>
-          {% autoescape off %}
-          <p class="card-text">{{ experiment_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=experiment_post.slug) }}">Read</a></p>
-          {% endautoescape %}
-          <a href="{{ url_for('view_post',post_slug='experiments') }}" class="btn btn-primary">Explore more experiments</a>   
-          {% else %}
-          <h3><a href="{{ url_for('view_post',post_slug='experiments') }}">Experiment</a></h3>
-          {% endif %}
-        </div>
-      </div>
-      <div class="card">
-        {% if question_post.featured_img %}
-        <img class="card-img-top" src="/static/{{ question_post.featured_img }}" style="height: 30vh; object-fit: cover;">
-        {% else %}
-        <img class="card-img-top" src="/static/Hauksbee_Generator.jpg" style="height: 30vh; object-fit: cover;">
-        {% endif %}
-        <div class="card-body">
-          {% if question_post %}
-          <h4 class="card-title">{{ question_post.title }}</h4>
-          {% autoescape off %}
-          <p class="card-text">{{ question_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=question_post.slug) }}">Read</a></p>
-          {% endautoescape %}
-          <a href="{{ url_for('view_post',post_slug='questions') }}" class="btn btn-primary">Explore more questions</a>
-          {% else %}
-          <h3><a href="{{ url_for('view_post',post_slug='questions') }}">Question</a></h3>
-          {% endif %}
-        </div>
-      </div>      
+      {% endfor %}
     </div>
   </div>
 <hr>

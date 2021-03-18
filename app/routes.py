@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, PostForm, EmptyForm, UploadForm
-from app.models import User, Post
+from app.forms import LoginForm, PostForm, EmptyForm, UploadForm, SetFeaturedForm
+from app.models import User, Post, Featured
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
@@ -11,13 +11,11 @@ import os
 @app.route('/index')
 #@login_required
 def index():
-  #user = {'username':'admin'}
   posts = Post.query.filter_by(status=1).order_by(Post.timestamp.desc()).all()  
-  #book_post = Post.query.filter_by(slug='harvard-case-histories-in-experimental-science').first_or_404()
-  #story_post = Post.query.filter_by(slug='when-young-faradays-first-discovery-led-to-charges-of-plagiarism').first_or_404()
-  #experiment_post = Post.query.filter_by(slug='making-a-leyden-jar').first_or_404()
-  #question_post = Post.query.filter_by(slug='how-much-does-air-weigh').first_or_404()
-  return render_template('index.html', title='Home', posts=posts[0:1], book_post=book_post, story_post=story_post, experiment_post=experiment_post, question_post=question_post)
+  featured = Featured.query.all()
+  featured_posts = [Post.query.filter_by(id=f.post_id).first() for f in featured]
+  featured_info = zip(featured, featured_posts)
+  return render_template('index.html', title='Home', posts=posts[0:1],featured_info=featured_info)
 
 @app.route('/all-posts')
 #@login_required
@@ -134,4 +132,16 @@ def upload():
     flash('File successfully uploaded')
     return redirect(url_for('index'))
   return render_template('upload.html', form=form)
-    
+
+@app.route('/set-featured', methods=['GET', 'POST'])
+@login_required
+def set_featured():
+  form = SetFeaturedForm()
+  if form.validate_on_submit():
+    featured = Featured.query.filter_by(type=form.type.data).first()
+    featured.post_id = Post.query.filter_by(slug=form.slug.data).first().id
+    db.session.commit()
+    flash('Post set as featured {}'.format(form.type.data))
+    return redirect(url_for('index'))
+  return render_template('set_featured.html', form=form)
+      
