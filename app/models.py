@@ -77,6 +77,7 @@ class Category(db.Model):
 def load_user(id):
   return User.query.get(int(id))
 
-
-
-        
+class Featured(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  type = db.Column(db.String(32), index=True, unique=True)
+  post_id = db.Column(db.Integer, db.ForeignKey('post.id'))        

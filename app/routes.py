@@ -12,11 +12,11 @@ import os
 #@login_required
 def index():
   #user = {'username':'admin'}
-  posts = Post.query.filter_by(status=1).order_by(Post.timestamp.desc()).all()
-  book_post = Post.query.filter_by(slug='harvard-case-histories-in-experimental-science').first_or_404()
-  story_post = Post.query.filter_by(slug='when-young-faradays-first-discovery-led-to-charges-of-plagiarism').first_or_404()
-  experiment_post = Post.query.filter_by(slug='making-a-leyden-jar').first_or_404()
-  question_post = Post.query.filter_by(slug='how-much-does-air-weigh').first_or_404()
+  posts = Post.query.filter_by(status=1).order_by(Post.timestamp.desc()).all()  
+  #book_post = Post.query.filter_by(slug='harvard-case-histories-in-experimental-science').first_or_404()
+  #story_post = Post.query.filter_by(slug='when-young-faradays-first-discovery-led-to-charges-of-plagiarism').first_or_404()
+  #experiment_post = Post.query.filter_by(slug='making-a-leyden-jar').first_or_404()
+  #question_post = Post.query.filter_by(slug='how-much-does-air-weigh').first_or_404()
   return render_template('index.html', title='Home', posts=posts[0:1], book_post=book_post, story_post=story_post, experiment_post=experiment_post, question_post=question_post)
 
 @app.route('/all-posts')
