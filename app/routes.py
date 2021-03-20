@@ -65,6 +65,8 @@ def edit_post(post_slug):
     post.body = form.post.data
     post.featured_img = form.featured_img.data
     post.status = int(form.status.data)
+    if form.read_more_text.data:
+      post.read_more_text = form.read_more_text.data
     if form.parent_slug.data:
       parent = Post.query.filter_by(slug=form.parent_slug.data).first_or_404()
       if int(form.add_remove_parent.data) == 1 and not post.is_child_of(parent):
@@ -81,6 +83,7 @@ def edit_post(post_slug):
     form.post.data = post.body
     form.featured_img.data = post.featured_img
     form.status.process_data(post.status)
+    form.read_more_text.data = post.read_more_text
   return render_template("edit_post.html", title="Edit Post", form=form,
     post = post)
 

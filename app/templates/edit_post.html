@@ -45,6 +45,13 @@
        <span style="color: red;">[{{ error }}]</span>
        {% endfor %}
      </p>
+     <p>
+       {{ form.read_more_text.label }}<br>
+       {{ form.read_more_text() }}<br>
+       {% for error in form.read_more_text.errors %}
+       <span style="color: red;">[{{ error }}]</span>
+       {% endfor %}
+     </p>
      <p>{{ form.submit() }}</p>
   </form>
 {% endblock %}
