@@ -43,6 +43,7 @@ class SetFeaturedForm(FlaskForm):
   featured_list = []
   type = SelectField('Select featured type', choices=[('stories', 'stories'),
     ('books', 'books'), ('experiments', 'experiments'), ('questions', 'questions'),
-    ('scientists', 'scientists'), ('weird ideas', 'weird ideas')])
+    ('scientists', 'scientists'), ('weird-ideas', 'weird-ideas'),
+    ('history-and-science-teaching', 'history-and-science-teaching')])
   slug = StringField('Enter post slug', validators=[DataRequired()])
   submit = SubmitField('Submit')                    

@@ -41,7 +41,7 @@
           {% autoescape off %}
           <p class="card-text">{{ featured_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=featured_post.slug) }}">Read</a></p>
           {% endautoescape %}
-          <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary">Explore more {{ featured_type.type }}</a></h3>
+          <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary">{{ featured_type.display }}</a></h3>
           {% else %}
           <h3><a href="{{ url_for('view_post', post_slug=featured_type.type) }}">{{ featured_type.type }}</a></h3>
           {% endif %}
