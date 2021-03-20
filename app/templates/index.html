@@ -26,8 +26,9 @@
       <div class="h2 text-center">Featured articles</div>
     </div>
     <hr>
-    <div class="card-deck">
+    <div class="row row-cols-3">
       {% for featured_type, featured_post in featured_info %}
+      <div class="col-md-4 mt-3">
       <div class="card">
         {% if featured_post.featured_img %}
         <img class="card-img-top" src="/static/{{ featured_post.featured_img }}" style="height: 30vh; object-fit: cover;">
@@ -45,6 +46,7 @@
           <h3><a href="{{ url_for('view_post', post_slug=featured_type.type) }}">{{ featured_type.type }}</a></h3>
           {% endif %}
         </div>
+      </div>
       </div>
       {% endfor %}
     </div>
