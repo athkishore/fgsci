@@ -40,9 +40,9 @@ class UploadForm(FlaskForm):
   submit = SubmitField('Upload')
 
 class SetFeaturedForm(FlaskForm):
-  type = SelectField('Select featured type', choices=[('stories', 'stories'), 
-    ('books', 'books'), ('experiments', 'experiments'), 
-    ('questions', 'questions')])
+  featured_list = []
+  type = SelectField('Select featured type', choices=[('stories', 'stories'),
+    ('books', 'books'), ('experiments', 'experiments'), ('questions', 'questions'),
+    ('scientists', 'scientists'), ('weird ideas', 'weird ideas')])
   slug = StringField('Enter post slug', validators=[DataRequired()])
-  submit = SubmitField('Submit')
-                    
+  submit = SubmitField('Submit')                    
