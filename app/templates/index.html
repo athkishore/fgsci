@@ -10,7 +10,7 @@
     <div class="row row-cols-3">
       {% for featured_type, featured_post in featured_info %}
       <div class="col-md-4 mt-3">
-      <div class="card">
+      <div class="card h-100">
         {% if featured_post.featured_img %}
         <img class="card-img-top" src="/static/{{ featured_post.featured_img }}" style="height: 30vh; object-fit: cover;">
         {% else %}
