@@ -22,6 +22,7 @@
   </p>
   {% endif %}
 
+  <div class="container">
   {% if post.child_posts.all() %}
   <div class="card">
     <div class="card-header">
@@ -34,23 +35,19 @@
     <ul class="list-group list-group-flush">
       {% for child_post in post.child_posts.all() %}
       {% if child_post.status == 1 %}
-      <table>
-      <tr>
-        <td>
+        <li class="list-group-item">
           {% if child_post.featured_img %}
-          <li class="list-group-item"><img src="/static/{{ child_post.featured_img }}" width="64">
+          <img src="/static/{{ child_post.featured_img }}" width="64">
           {% else %}
-          <li class="list-group-item"><img src="/static/Hauksbee_Generator.jpg" width="64">
+          <img src="/static/Hauksbee_Generator.jpg" width="64">
           {% endif %}
-        </td>
-        <td>      
-          <a href="{{ url_for('view_post', post_slug=child_post.slug) }}">{{ child_post.title }}</a></li>
-        </td>
-      </tr>
+          &nbsp; &nbsp; &nbsp; &nbsp; <a href="{{ url_for('view_post', post_slug=child_post.slug) }}">{{ child_post.title }}</a>
+        </li>
       {% endif %}
       {% endfor %}
     </ul>
   </div>
   {% endif %}
+  </div>
 </div>
 {% endblock %}
