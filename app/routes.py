@@ -17,15 +17,19 @@ def index():
   featured_info = zip(featured, featured_posts)
   return render_template('index.html', title='Home', posts=posts[0:1],featured_info=featured_info)
 
+@app.route('/about')
+def about():
+  return render_template('about.html', title='About')
+
 @app.route('/all-posts')
-#@login_required
+@login_required
 def all_posts():
   #user = {'username':'admin'}
   posts = Post.query.order_by(Post.timestamp.desc()).all()
   return render_template('all_posts.html', title='Home', posts=posts)
 
 @app.route('/drafts')
-#@login_required
+@login_required
 def drafts():
   #user = {'username':'admin'}
   posts = Post.query.filter_by(status=0).order_by(Post.timestamp.desc()).all()
