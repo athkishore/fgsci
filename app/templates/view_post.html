@@ -36,12 +36,17 @@
       {% for child_post in post.child_posts.all() %}
       {% if child_post.status == 1 %}
         <li class="list-group-item">
+          <div class="row">
+          <div class="col-md-1">
           {% if child_post.featured_img %}
           <img src="/static/{{ child_post.featured_img }}" width="64">
           {% else %}
           <img src="/static/Hauksbee_Generator.jpg" width="64">
           {% endif %}
-          &nbsp; &nbsp; &nbsp; &nbsp; <a href="{{ url_for('view_post', post_slug=child_post.slug) }}">{{ child_post.title }}</a>
+          </div>
+          <div class="col-md-11"><a href="{{ url_for('view_post', post_slug=child_post.slug) }}">{{ child_post.title
+          }}</a></div>
+          </div>
         </li>
       {% endif %}
       {% endfor %}
