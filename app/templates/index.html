@@ -20,7 +20,7 @@
           {% if featured_post %}
           <h4 class="card-title">{{ featured_post.title }}</a></h4>
           {% autoescape off %}
-          <p class="card-text">{{ featured_post.body|truncate(200) }} <a href="{{ url_for('view_post', post_slug=featured_post.slug) }}">Read</a></p>
+          <p class="card-text">{{ featured_post.body|striptags|truncate(250 - featured_post.title|length) }} <a href="{{ url_for('view_post', post_slug=featured_post.slug) }}">Read</a></p>
           {% endautoescape %}
           <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary">{{ featured_type.display }}</a></h3>
           {% else %}
