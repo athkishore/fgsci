@@ -104,7 +104,7 @@ def create_post():
     return redirect(url_for('index'))
   return render_template("create_post.html", title="Create Post", form=form)   
   
-@app.route('/view-post/<post_slug>')
+@app.route('/view/<post_slug>')
 def view_post(post_slug):
   post = Post.query.filter_by(slug=post_slug).first_or_404()
   form = EmptyForm()
