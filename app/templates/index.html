@@ -4,12 +4,12 @@
   <div class="container-fluid">
         <h2 style="text-align: center;">Learning science through history</h2>
         <p>History of science helps us develop a fuller and richer understanding of scientific knowledge. The stories of experiments, controversies and discarded theories from the past make us examine the knowledge that we take for granted today. This leads to a better appreciation of the reasons for accepting the validity of the current theories.</p>
-        <p><strong>Forgotten science</strong> is a collection of generously interlinked whimsical snippets from the history of science. Here you will read about how scientists in the past tried to answer the questions you have while learning science. You will find out how to repeat some of the historical experiments with common materials and equipment lying around. There are also excerpts from old books and papers, and summaries of archaic scientific literature transcribed for a modern reader.</p>
+        <p><strong>Forgotten science</strong> is a whimsical collection of interesting snippets from the history of science. Here you will read about how scientists in the past tried to answer the questions you might have had while learning science. You will find out how to repeat some of the historical experiments with common materials and equipment lying around. There are also excerpts from old books and papers, and summaries of archaic scientific literature transcribed for a modern reader.</p>
       <hr>
       <div class="h2 text-center">Featured articles</div>
-    <div class="row row-cols-3">
+    <div class="row row-cols-4">
       {% for featured_type, featured_post in featured_info %}
-      <div class="col-md-4 mt-3">
+      <div class="col-md-3 mt-3">
       <div class="card h-100">
         {% if featured_post.featured_img %}
         <img class="card-img-top" src="/static/{{ featured_post.featured_img }}" style="height: 30vh; object-fit: cover;">
@@ -22,7 +22,7 @@
           {% autoescape off %}
           <p class="card-text">{{ featured_post.body|striptags|truncate(250 - featured_post.title|length) }} <a href="{{ url_for('view_post', post_slug=featured_post.slug) }}">Read</a></p>
           {% endautoescape %}
-          <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary">{{ featured_type.display }}</a></h3>
+          <a href="{{ url_for('view_post', post_slug=featured_type.type) }}" class="btn btn-primary mb1 bg-olive">{{ featured_type.display }}</a></h3>
           {% else %}
           <h3><a href="{{ url_for('view_post', post_slug=featured_type.type) }}">{{ featured_type.type }}</a></h3>
           {% endif %}
